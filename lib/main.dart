@@ -1,4 +1,5 @@
 import 'page/text_tile_page.dart';
+import 'page/pageView.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -55,11 +56,12 @@ class _MainPageState extends State<MainPage> {
           icon: Text('ExpansionTile', style: style),
           label: 'Map',
         ),
-        /*
+
         BottomNavigationBarItem(
           icon: Text('ExpansionTile', style: style),
           label: 'Terms of Use',
         ),
+        /*
         BottomNavigationBarItem(
           icon: Text('ExpansionTile', style: style),
           label: 'Camera',
@@ -80,11 +82,11 @@ class _MainPageState extends State<MainPage> {
         return TextTilePage(); //Homepage (My plants)
       case 1:
         return TextTilePage(); //Map
+      case 2:
+        return MyHomePage(); //Hidden: Terms of Use Screen
       case 3:
-        return TextTilePage(); //Hidden: Terms of Use Screen
-      case 4:
         return TextTilePage(); //Hidden: Camera
-      case 5:
+      case 4:
         return TextTilePage(); //Hidden:
       default:
         return Container();
