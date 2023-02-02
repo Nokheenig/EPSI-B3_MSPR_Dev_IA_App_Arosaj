@@ -1,6 +1,7 @@
 import 'page/text_tile_page.dart';
 import 'page/pageView.dart';
 import 'MapsView.dart';
+import 'MyModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -64,7 +65,7 @@ class _MainPageState extends State<MainPage> {
 
         BottomNavigationBarItem(
           icon: Text('', style: style),
-          label: 'Terms',
+          label: 'Predict',
         ),
         /*
         BottomNavigationBarItem(
@@ -90,9 +91,9 @@ class _MainPageState extends State<MainPage> {
       case 2:
         return MapPage(); //Map
       case 3:
-        return TextTilePage(text:"Plop"); //Hidden: Camera
+        return MyModel(title: 'My classifier'); //Classifier
       case 4:
-        return TextTilePage(text:"pif"); //Hidden:
+        return TextTilePage(text:"pif"); //Hidden: Camera
       default:
         return Container();
     }
