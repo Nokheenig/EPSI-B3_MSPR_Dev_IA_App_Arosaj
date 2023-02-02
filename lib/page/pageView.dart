@@ -11,17 +11,38 @@ class _MyHomePageState extends State<MyHomePage> {
   PageController controller=PageController();
   List<Widget> _list=<Widget>[
     new Center(child:new Pages(
-                                display: ({@required final String text}) {
+                                display: ({@required final String? text}) {
                                 assert(text != null);
-                                return MyTextWidget(text: text);
+                                return MyTextWidget(text: text!);
                               },
                                 text: "Plant 1",)),
     new Center(child:new Pages(
-                                display: ({@required final String text}) {
+      display: ({@required final String? text}) {
+        assert(text != null);
+        return MyTextWidget(text: text!);
+      },
+      text: "Plant 2",)),
+    new Center(child:new Pages(
+      display: ({@required final String? text}) {
+        assert(text != null);
+        return MyTextWidget(text: text!);
+      },
+      text: "Plant 3",)),
+    new Center(child:new Pages(
+      display: ({@required final String? text}) {
+        assert(text != null);
+        return MyTextWidget(text: text!);
+      },
+      text: "Plant 4",)),
+    /*new Center(child:new Pages(
+                                display: ({@required final String? text}) {
                                   assert(text != null);
-                                  return MyTextWidget(text: text);
+                                  return TextTilePage(text: text!);
                                 },
-                                text: "Plant 2",)),/*
+                                text: "Mon beau géranium",)),
+     */
+
+    /*
     new Center(child:new Pages(text: "Plant 3",)),
     new Center(child:new Pages(text: "Plant 4",))
     */
@@ -91,7 +112,7 @@ class _MyHomePageState extends State<MyHomePage> {
 class MyTextWidget extends StatelessWidget {
   final String text;
 
-  MyTextWidget({@required this.text}) : assert(text != null);
+  MyTextWidget({required this.text}) : assert(text != null);
 
   @override
   Widget build(final BuildContext context) {
@@ -106,8 +127,8 @@ class Pages extends StatefulWidget {
   final String text;
 
   Pages({
-    @required this.display,
-    @required this.text
+    required this.display,
+    required this.text
   }) :  assert(display != null),
         assert(text != null);
 
@@ -122,7 +143,7 @@ class PagesState extends State<Pages> {
   Widget build(final BuildContext context) {
     return Center(
       child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children:<Widget>[
             widget.display(text: widget.text),
             Text(widget.text,textAlign: TextAlign.center,style: TextStyle(

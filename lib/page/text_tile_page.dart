@@ -1,16 +1,23 @@
 import '../main.dart';
-import '../utils.dart';
 import 'package:flutter/material.dart';
 
 class TextTilePage extends StatefulWidget {
+  final String text;
+
+  TextTilePage({
+    required this.text
+}) : assert(text != null);
+
   @override
-  _TextTilePageState createState() => _TextTilePageState();
+  State<StatefulWidget> createState() {
+    return _TextTilePageState();
+  }
 }
 
 class _TextTilePageState extends State<TextTilePage> {
   static final double radius = 20;
 
-  UniqueKey keyTile;
+  UniqueKey? keyTile;
   bool isExpanded = false;
 
   void expandTile() {
@@ -63,7 +70,7 @@ class _TextTilePageState extends State<TextTilePage> {
         'https://picsum.photos/200',
         fit: BoxFit.cover,
         width: double.infinity,
-        height: 400,
+        height: 200,
       );
 
   Widget buildText(BuildContext context) => Theme(
@@ -73,20 +80,15 @@ class _TextTilePageState extends State<TextTilePage> {
           initiallyExpanded: isExpanded,
           childrenPadding: EdgeInsets.all(16).copyWith(top: 0),
           title: Text(
-            '👩 Sarah Pepperstone',
+            widget.text,
             style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
           ),
           children: [
             Text(
-              'My name is Sarah and I am a New York City based Flutter developer. I help entrepreneurs & businesses figure out how to build scalable applications.\n\nWith over 7 years experience spanning across many industries from B2B to B2C, I live and breath Flutter.',
+              "La tulipe craint l'humidité stagnante et n'aime pas le vent, surtout les variétés qui ont une hampe florale élevée. Coupez les fleurs fanées après la floraison et attendez que les feuilles jaunissent pour arracher les bulbes qui pourront ainsi se reconstituer.",
               style: TextStyle(fontSize: 18, height: 1.4),
             ),
           ],
-          onExpansionChanged: (isExpanded) => Utils.showSnackBar(
-            context,
-            text: isExpanded ? 'Expand Tile' : 'Shrink Tile',
-            color: isExpanded ? Colors.green : Colors.red,
-          ),
         ),
       );
 }

@@ -1,5 +1,6 @@
 import 'page/text_tile_page.dart';
 import 'page/pageView.dart';
+import 'MapsView.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -40,26 +41,30 @@ class _MainPageState extends State<MainPage> {
       );
 
   Widget buildBottomBar() {
-    final style = TextStyle(color: Colors.white);
+    final style = TextStyle(color: Colors.blueAccent);
 
     return BottomNavigationBar(
       backgroundColor: Theme.of(context).primaryColor,
-      selectedItemColor: Colors.white,
-      unselectedItemColor: Colors.white70,
+      selectedItemColor: Colors.deepOrangeAccent,
+      unselectedItemColor: Colors.blueGrey,
       currentIndex: indexBottomNavBar,
       items: [
         BottomNavigationBarItem(
-          icon: Text('ExpansionTile', style: style),
-          label: 'My plants',
+          icon: Text('', style: style),
+          label: 'Card',
         ),
         BottomNavigationBarItem(
-          icon: Text('ExpansionTile', style: style),
+          icon: Text('', style: style),
+          label: 'Screen',
+        ),
+        BottomNavigationBarItem(
+          icon: Text('', style: style),
           label: 'Map',
         ),
 
         BottomNavigationBarItem(
-          icon: Text('ExpansionTile', style: style),
-          label: 'Terms of Use',
+          icon: Text('', style: style),
+          label: 'Terms',
         ),
         /*
         BottomNavigationBarItem(
@@ -79,15 +84,15 @@ class _MainPageState extends State<MainPage> {
   Widget buildPages() {
     switch (indexBottomNavBar) {
       case 0:
-        return TextTilePage(); //Homepage (My plants)
+        return TextTilePage(text:"Tulipe"); //Homepage (My plants)
       case 1:
-        return TextTilePage(); //Map
-      case 2:
         return MyHomePage(); //Hidden: Terms of Use Screen
+      case 2:
+        return MapPage(); //Map
       case 3:
-        return TextTilePage(); //Hidden: Camera
+        return TextTilePage(text:"Plop"); //Hidden: Camera
       case 4:
-        return TextTilePage(); //Hidden:
+        return TextTilePage(text:"pif"); //Hidden:
       default:
         return Container();
     }
