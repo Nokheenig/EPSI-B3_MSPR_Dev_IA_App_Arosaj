@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'text_tile_page.dart';
 
 class MyHomePage extends StatefulWidget {
   @override
@@ -9,10 +10,21 @@ class _MyHomePageState extends State<MyHomePage> {
 
   PageController controller=PageController();
   List<Widget> _list=<Widget>[
-    new Center(child:new Pages(text: "Plant 1",)),
-    new Center(child:new Pages(text: "Plant 2",)),
+    new Center(child:new Pages(
+                                display: ({@required final String text}) {
+                                assert(text != null);
+                                return MyTextWidget(text: text);
+                              },
+                                text: "Plant 1",)),
+    new Center(child:new Pages(
+                                display: ({@required final String text}) {
+                                  assert(text != null);
+                                  return MyTextWidget(text: text);
+                                },
+                                text: "Plant 2",)),/*
     new Center(child:new Pages(text: "Plant 3",)),
     new Center(child:new Pages(text: "Plant 4",))
+    */
   ];
   int _curr=0;
 
@@ -21,13 +33,13 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
         backgroundColor: Colors.grey,
         appBar:AppBar(
-          title: Text("GeeksforGeeks"),
+          title: Text("Plant: "),
           backgroundColor: Colors.green,
           actions: <Widget>[
             Padding(
               padding: const EdgeInsets.all(3.0),
               child: Text(
-                "PlantE: "+(
+                (
                     _curr+1).toString()+"/"+_list.length.toString(),textScaleFactor: 2,),
             )
           ],),
@@ -76,19 +88,52 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-class Pages extends StatelessWidget {
-  final text;
-  Pages({this.text});
+class MyTextWidget extends StatelessWidget {
+  final String text;
+
+  MyTextWidget({@required this.text}) : assert(text != null);
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
+    return Text(this.text);
+  }
+}
+
+typedef Widget DisplayType({@required final String text});
+
+class Pages extends StatefulWidget {
+  final DisplayType display;
+  final String text;
+
+  Pages({
+    @required this.display,
+    @required this.text
+  }) :  assert(display != null),
+        assert(text != null);
+
+  @override
+  State<StatefulWidget> createState() {
+    return PagesState();
+  }
+}
+
+class PagesState extends State<Pages> {
+  @override
+  Widget build(final BuildContext context) {
     return Center(
       child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children:<Widget>[
-            Text(text,textAlign: TextAlign.center,style: TextStyle(
+            widget.display(text: widget.text),
+            Text(widget.text,textAlign: TextAlign.center,style: TextStyle(
                 fontSize: 30,fontWeight:FontWeight.bold),),
           ]
       ),
     );
+
+
+
+
+    //this.widget.display(text: this.widget.text);
   }
 }
