@@ -5,7 +5,7 @@ class BasicTile {
   final List<BasicTile> tiles;
 
   const BasicTile({
-    @required this.title,
+    required this.title,
     this.tiles = const [],
   });
 }

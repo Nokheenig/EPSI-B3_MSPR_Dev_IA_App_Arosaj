@@ -1,7 +1,6 @@
 import '../data/basic_tiles.dart';
 import '../main.dart';
 import '../model/basic_tile.dart';
-import '../utils.dart';
 import 'package:flutter/material.dart';
 
 class BasicTilePage extends StatelessWidget {
@@ -23,7 +22,7 @@ class BasicTileWidget extends StatelessWidget {
 
   const BasicTileWidget({
     Key key,
-    @required this.tile,
+    required this.tile,
   }) : super(key: key);
 
   @override
@@ -34,11 +33,7 @@ class BasicTileWidget extends StatelessWidget {
     if (tiles.isEmpty) {
       return ListTile(
         title: Text(title),
-        onTap: () => Utils.showSnackBar(
-          context,
-          text: 'Clicked on: $title',
-          color: Colors.green,
-        ),
+        onTap: null,
       );
     } else {
       return Container(

@@ -41,6 +41,11 @@ dependencies:
   geolocator: ^9.0.2
   tflite: ^1.1.2
   image_picker: ^0.8.6+1
+  camera: ^0.10.3
+  path_provider: ^2.0.12
+  video_player: ^2.5.1
+  permission_handler: ^10.2.0
+  image: ^4.0.13
 
 dev_dependencies:
   flutter_test:
@@ -68,6 +73,8 @@ flutter:
     - assets/imagenet_labels.txt
     - assets/mobilenet_v1_1.0_224_1_default_1.tflite
     - assets/dummyImage.JPG
+    - assets/images/camera-shutter-icon.png
+    - assets/images/bouncy_balls.gif
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

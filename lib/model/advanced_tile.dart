@@ -8,7 +8,7 @@ class AdvancedTile {
   bool isExpanded;
 
   AdvancedTile({
-    @required this.title,
+    required this.title,
     this.icon,
     this.tiles = const [],
     this.isExpanded = false,

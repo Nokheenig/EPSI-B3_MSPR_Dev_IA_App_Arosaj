@@ -2,6 +2,7 @@ import 'page/text_tile_page.dart';
 import 'page/pageView.dart';
 import 'MapsView.dart';
 import 'MyModel.dart';
+import 'camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -42,16 +43,17 @@ class _MainPageState extends State<MainPage> {
       );
 
   Widget buildBottomBar() {
-    final style = TextStyle(color: Colors.blueAccent);
+    final style = TextStyle(color: Colors.blue);
 
     return BottomNavigationBar(
-      backgroundColor: Theme.of(context).primaryColor,
-      selectedItemColor: Colors.deepOrangeAccent,
-      unselectedItemColor: Colors.blueGrey,
+      type:BottomNavigationBarType.fixed,
+      backgroundColor: Theme.of(context).primaryColor,// Color.fromARGB(255, 61, 107, 145),//Theme.of(context).primaryColor,
+      selectedItemColor: Color.fromARGB(255, 255, 255, 255),
+      unselectedItemColor: Color.fromARGB(255, 200, 200, 200),
       currentIndex: indexBottomNavBar,
       items: [
         BottomNavigationBarItem(
-          icon: Text('', style: style),
+          icon: Icon(Icons.card_giftcard),//Text('', style: style),
           label: 'Card',
         ),
         BottomNavigationBarItem(
@@ -59,7 +61,7 @@ class _MainPageState extends State<MainPage> {
           label: 'Screen',
         ),
         BottomNavigationBarItem(
-          icon: Text('', style: style),
+          icon: Icon(Icons.card_travel),//Text('', style: style),
           label: 'Map',
         ),
 
@@ -67,11 +69,12 @@ class _MainPageState extends State<MainPage> {
           icon: Text('', style: style),
           label: 'Predict',
         ),
-        /*
+
         BottomNavigationBarItem(
-          icon: Text('ExpansionTile', style: style),
+          icon: Icon(Icons.camera),//Text('', style: style),
           label: 'Camera',
         ),
+        /*
         BottomNavigationBarItem(
           icon: Text('ExpansionTile', style: style),
           label: 'Other',
@@ -93,7 +96,7 @@ class _MainPageState extends State<MainPage> {
       case 3:
         return MyModel(title: 'My classifier'); //Classifier
       case 4:
-        return TextTilePage(text:"pif"); //Hidden: Camera
+        return MyCamera(); //Hidden: Camera
       default:
         return Container();
     }

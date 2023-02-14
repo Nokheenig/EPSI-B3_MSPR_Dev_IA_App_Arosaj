@@ -1,7 +1,6 @@
 import '../data/advanced_tiles.dart';
 import '../main.dart';
 import '../model/advanced_tile.dart';
-import '../utils.dart';
 import 'package:flutter/material.dart';
 
 class AdvancedTilePage extends StatefulWidget {
@@ -22,13 +21,6 @@ class _AdvancedTilePageState extends State<AdvancedTilePage> {
               final tile = advancedTiles[index];
               setState(() => tile.isExpanded = isExpanded);
 
-              Utils.showSnackBar(
-                context,
-                text: isExpanded
-                    ? 'Shrink ${tile.title}'
-                    : 'Expand ${tile.title}',
-                color: Colors.green,
-              );
             },
             children: advancedTiles
                 .map((tile) => ExpansionPanelRadio(
@@ -47,12 +39,6 @@ class _AdvancedTilePageState extends State<AdvancedTilePage> {
   Widget buildTile(AdvancedTile tile) => ListTile(
         leading: tile.icon != null ? Icon(tile.icon) : null,
         title: Text(tile.title),
-        onTap: tile.tiles.isEmpty
-            ? () => Utils.showSnackBar(
-                  context,
-                  text: 'Clicked on: ${tile.title}',
-                  color: Colors.green,
-                )
-            : null,
+        onTap: null,
       );
 }
