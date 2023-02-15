@@ -1,5 +1,5 @@
 import '../data/basic_tiles.dart';
-import '../main.dart';
+import '../../../main.dart';
 import '../model/basic_tile.dart';
 import 'package:flutter/material.dart';
 
@@ -21,7 +21,7 @@ class BasicTileWidget extends StatelessWidget {
   final BasicTile tile;
 
   const BasicTileWidget({
-    Key key,
+    Key? key,
     required this.tile,
   }) : super(key: key);
 

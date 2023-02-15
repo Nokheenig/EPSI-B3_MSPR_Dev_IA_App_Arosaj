@@ -1,5 +1,5 @@
 import '../data/advanced_tiles.dart';
-import '../main.dart';
+import '../../../main.dart';
 import '../model/advanced_tile.dart';
 import 'package:flutter/material.dart';
 

@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 class AdvancedTile {
   final String title;
-  final IconData icon;
+  final IconData? icon;
   final List<AdvancedTile> tiles;
   bool isExpanded;
 

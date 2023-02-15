@@ -1,12 +1,21 @@
-import 'page/text_tile_page.dart';
-import 'page/pageView.dart';
-import 'MapsView.dart';
-import 'MyModel.dart';
-import 'camera.dart';
+import 'screens/tiles/page/text_tile_page.dart';
+import 'screens/tiles/page/pageView.dart';
+import 'screens/map/MapsView.dart';
+import 'screens/classifier/MyModel.dart';
+import 'screens/arc/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:camera/camera.dart'; 
+
+List<CameraDescription> cameras = [];
 
 Future main() async {
+  try {
+    WidgetsFlutterBinding.ensureInitialized();
+    cameras = await availableCameras();
+  } on CameraException catch (e) {
+    print('Error in fetching the cameras: $e');
+  }
   WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,

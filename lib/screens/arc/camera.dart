@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:video_player/video_player.dart';
 import 'package:camera/camera.dart';
-import 'main.dart';
-import 'MyModel.dart';
+import '../../main.dart';
+import '../classifier/MyModel.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:math' hide log;
 import 'dart:typed_data';
@@ -126,7 +126,7 @@ class MyCameraState extends State<MyCamera> {
 
     log("rawImage!.path:");
     log(rawImage!.path);
-    File imageFile = File(rawImage!.path);
+    File imageFile = File(rawImage.path);
     log("imageFile type is :");
     log(imageFile.runtimeType.toString());
 
