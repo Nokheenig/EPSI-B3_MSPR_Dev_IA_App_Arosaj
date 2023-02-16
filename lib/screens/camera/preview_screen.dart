@@ -16,32 +16,55 @@ class PreviewScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(8.0, 25.0, 8.0, 8.0),//.all(8.0),
-            child: TextButton(
-              onPressed: () {
-                Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(
-                    builder: (context) => CapturesScreen(
-                      imageFileList: fileList,
+      body: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 8.0),//.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(
+                          builder: (context) => CapturesScreen(
+                            imageFileList: fileList,
+                          ),
+                        ),
+                      );
+                    },
+                    child: Text('Go to all captures'),
+                    style: TextButton.styleFrom(
+                      primary: Colors.black,
+                      backgroundColor: Colors.white,
                     ),
                   ),
-                );
-              },
-              child: Text('Go to all captures'),
-              style: TextButton.styleFrom(
-                primary: Colors.black,
-                backgroundColor: Colors.white,
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(
+                          builder: (context) => CapturesScreen(
+                            imageFileList: fileList,
+                          ),
+                        ),
+                      );
+                    },
+                    child: Text('Predict'),
+                    style: TextButton.styleFrom(
+                      primary: Colors.black,
+                      backgroundColor: Colors.white,
+                    ),
+                  )
+                ],
               ),
             ),
-          ),
-          Expanded(
-            child: Image.file(imageFile),
-          ),
-        ],
+            Expanded(
+              child: Image.file(imageFile),
+            ),
+          ],
+        ),
       ),
     );
   }

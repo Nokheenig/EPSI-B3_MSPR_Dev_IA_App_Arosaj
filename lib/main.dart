@@ -1,3 +1,5 @@
+import 'package:expandable_listview_example/screens/camera/camera_screen.dart';
+
 import 'screens/tiles/page/text_tile_page.dart';
 import 'screens/tiles/page/pageView.dart';
 import 'screens/map/MapsView.dart';
@@ -105,7 +107,7 @@ class _MainPageState extends State<MainPage> {
       case 3:
         return MyModel(title: 'My classifier'); //Classifier
       case 4:
-        return MyCamera(); //Hidden: Camera
+        return CameraScreen();//MyCamera(); //Hidden: Camera
       default:
         return Container();
     }
