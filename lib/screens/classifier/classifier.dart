@@ -11,6 +11,7 @@ class Classifier {
   List? _results;//= [{"label":"","confidence":0.0},{"label":"","confidence":0.0}];
   String cmodel = "assets/mobilenet_v1_1.0_224_1_default_1.tflite";
   String clabels = "assets/imagenet_labels.txt";
+  bool busy = false;
 
   Classifier({String model = "", String labels = ""} ){
     
@@ -24,6 +25,7 @@ class Classifier {
 
   Future loadModel() async {
     log("hey, it's me : loadModel");
+    this.busy = true;
     Tflite.close();
     String? res;
     res = await Tflite.loadModel(
@@ -31,20 +33,24 @@ class Classifier {
       labels: this.clabels,
     );
     print(res);
+    this.busy = false;
   }
 
   Future pickAnImage() async {
     log("hey, it's me : pickAnImage");
+    this.busy = true;
     // pick image and...
     XFile? image;
     image = await ImagePicker().pickImage(source: ImageSource.gallery);
     if (image == null) return;
     // Perform image classification on the selected image.
     imageClassification(File(image.path));
+    this.busy = false;
   }
 
-  Future<List> imageClassification(File image) async {
+  Future<Map> imageClassification(File image) async {
     log("hey, it's me : imageCLassification");
+    this.busy = true;
     // Run tensorflowlite image classification model on the image
     final List? results = await Tflite.runModelOnImage(
       path: image.path,
@@ -56,9 +62,41 @@ class Classifier {
     log("results:");
     if (results != null) results.forEach(print);
 // save the values in the variable we created and setstate
-      _image = image;
-      _results = results!;
-      return results;
+      this._image = image;
+      this._results = results!;
+      this.busy = false;
+
+      return {'prediction':results, 'image':image};
   }
 
+  Future getImage() async {
+    log("hey, it's me : getImage");
+    var _startTime = DateTime.now();
+    var _now = _startTime;
+    int iter = 0;
+    int _elapsedTime = 0;
+
+    do {
+      iter +=1;
+      _now = DateTime.now();
+      _elapsedTime = _now.millisecondsSinceEpoch - _startTime.millisecondsSinceEpoch;
+    } while (this.busy == true && _elapsedTime < 1000);
+    return this._image;
+  }
+
+  Future getResults() async {
+    log("hey, it's me : getResults");
+    var _startTime = DateTime.now();
+    var _now = _startTime;
+    int iter = 0;
+    int _elapsedTime = 0;
+
+    do {
+      iter +=1;
+      _now = DateTime.now();
+      _elapsedTime = _now.millisecondsSinceEpoch - _startTime.millisecondsSinceEpoch;
+    } while (this.busy == true && _elapsedTime < 1000);
+
+    return this._results;
+  }
 }

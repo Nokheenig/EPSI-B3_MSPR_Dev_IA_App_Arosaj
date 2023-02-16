@@ -4,7 +4,7 @@ import 'screens/tiles/page/text_tile_page.dart';
 import 'screens/tiles/page/pageView.dart';
 import 'screens/map/MapsView.dart';
 import 'screens/classifier/MyModel.dart';
-import 'screens/arc/camera.dart';
+import 'screens/classifier/classifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:camera/camera.dart'; 
@@ -23,7 +23,7 @@ Future main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
-
+  //final Classifier cls = new Classifier();
   runApp(MyApp());
 }
 
