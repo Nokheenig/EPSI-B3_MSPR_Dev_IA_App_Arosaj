@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'preview_screen.dart';
+import '../classifier/plant_prediction_screen.dart';
 
 import '../../../main.dart';
 
@@ -29,6 +30,8 @@ class _CameraScreenState extends State<CameraScreen> {
   double _currentZoomLevel = 1.0;
 
   List<File> allFileList = [];
+
+  bool newPicture = false;
 
   void onNewCameraSelected(CameraDescription cameraDescription) async {
     final previousCameraController = controller;
@@ -87,6 +90,7 @@ class _CameraScreenState extends State<CameraScreen> {
     onNewCameraSelected(cameras[0]);
     refreshAlreadyCapturedImages();*/
     getPermissionStatus();
+    newPicture = false;
     super.initState();
   }
 
@@ -155,6 +159,16 @@ class _CameraScreenState extends State<CameraScreen> {
       }
 
       setState(() {});
+
+      //Launch the validation page
+      if(newPicture == true){
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) =>
+                PlantPredictionScreen(imageFile: _imageFile!),
+        ));
+      }
+      newPicture = false;
     }
   }
 
@@ -453,6 +467,7 @@ class _CameraScreenState extends State<CameraScreen> {
                                                     await takePicture();
                                                 File imageFile =
                                                     File(rawImage!.path);
+                                                    newPicture = true;
 
                                                 int currentUnix = DateTime.now()
                                                     .millisecondsSinceEpoch;

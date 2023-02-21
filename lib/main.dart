@@ -40,12 +40,21 @@ class MyApp extends StatelessWidget {
 }
 
 class MainPage extends StatefulWidget {
+  int startingPage;
+
+  MainPage({this.startingPage = 0});
+  
   @override
   _MainPageState createState() => _MainPageState();
 }
 
 class _MainPageState extends State<MainPage> {
   int indexBottomNavBar = 0;
+
+  @override
+  void initState(){
+    indexBottomNavBar = widget.startingPage;
+  }
 
   @override
   Widget build(BuildContext context) => Scaffold(
