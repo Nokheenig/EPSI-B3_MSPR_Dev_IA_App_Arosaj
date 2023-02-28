@@ -21,51 +21,24 @@ class PlantPredictionScreen extends StatefulWidget {
 class _PlantPredictionScreenState extends State<PlantPredictionScreen> {
   List? _results;
   bool pictureValidated = false;
+  //int? radioListChoice = 0;
+  String? radioListChoice = "default";
   //File? _image;
   final Classifier cls = new Classifier();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Color.fromARGB(255, 158, 255, 171),
       body: SafeArea(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 8.0),//.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  TextButton(
-                    onPressed: null/*() {
-                      Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(
-                          builder: (context) => CapturesScreen(
-                            imageFileList: widget.fileList,
-                          ),
-                        ),
-                      );
-                    }*/,
-                    child: Text('Go to all captures'),
-                    style: TextButton.styleFrom(
-                      primary: Colors.black,
-                      backgroundColor: Colors.white,
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: predictImageFromCamera,
-                    child: Text('Predict'),
-                    style: TextButton.styleFrom(
-                      primary: Colors.black,
-                      backgroundColor: Colors.white,
-                    ),
-                  )
-                ],
-              ),
-            ),
             AnimatedCrossFade(
               duration: const Duration(milliseconds: 250),
               firstChild: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   /*Expanded(
                                 child: Image.file(widget.imageFile),
@@ -77,6 +50,7 @@ class _PlantPredictionScreenState extends State<PlantPredictionScreen> {
                     children: [
                       TextButton(
                         onPressed: () {
+                          
                           Navigator.of(context).pushReplacement(
                             MaterialPageRoute(
                               builder: (context) => MainPage(startingPage: 4),
@@ -102,13 +76,27 @@ class _PlantPredictionScreenState extends State<PlantPredictionScreen> {
                 ],
               ),
               secondChild: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Image(image: ResizeImage(FileImage(widget.imageFile), height: 400)),
+                  Text(radioListChoice!),
                   SingleChildScrollView(
                     child: Column(
                       children: _results != null
                           ? _results!.map((result) {
-                        return Card(
+                        return RadioListTile<dynamic>(
+                          title: Text('${result["label"]} -  ${result["confidence"].toStringAsFixed(2)}'),
+                          value: result["label"], 
+                          groupValue: radioListChoice,
+                           onChanged: (value) {
+                                                setState(() {
+                                                  radioListChoice = value.toString();
+                                                });
+                                              }
+                           ) 
+                        
+                        /*Card(
                           child: Container(
                             margin: EdgeInsets.all(10),
                             child: Text(
@@ -119,15 +107,16 @@ class _PlantPredictionScreenState extends State<PlantPredictionScreen> {
                                   fontWeight: FontWeight.bold),
                             ),
                           ),
-                        );
+                        )*/;
                       }).toList()
                           : [],
+                        
                     ),
                   )
+              
               ]),
               crossFadeState: _results != null ? CrossFadeState.showSecond : CrossFadeState.showFirst,
             ),
-            
           ],
         ),
       ),

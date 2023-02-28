@@ -118,6 +118,7 @@ class _CameraScreenState extends State<CameraScreen> {
     }
     try {
       XFile file = await cameraController.takePicture();
+      newPicture = true;
       return file;
     } on CameraException catch (e) {
       print('Error occured while taking picture: $e');
@@ -161,6 +162,7 @@ class _CameraScreenState extends State<CameraScreen> {
       setState(() {});
 
       //Launch the validation page
+      
       if(newPicture == true){
         Navigator.of(context).push(
           MaterialPageRoute(
@@ -467,7 +469,7 @@ class _CameraScreenState extends State<CameraScreen> {
                                                     await takePicture();
                                                 File imageFile =
                                                     File(rawImage!.path);
-                                                    newPicture = true;
+                                                    //newPicture = true;
 
                                                 int currentUnix = DateTime.now()
                                                     .millisecondsSinceEpoch;
