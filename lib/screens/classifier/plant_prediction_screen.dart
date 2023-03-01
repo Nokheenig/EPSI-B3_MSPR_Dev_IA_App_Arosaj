@@ -23,8 +23,25 @@ class _PlantPredictionScreenState extends State<PlantPredictionScreen> {
   bool pictureValidated = false;
   //int? radioListChoice = 0;
   String? radioListChoice = "default";
+  String? plantName = "Eg.: Hercules Poireau";
   //File? _image;
   final Classifier cls = new Classifier();
+
+  late TextEditingController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,12 +96,23 @@ class _PlantPredictionScreenState extends State<PlantPredictionScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Image(image: ResizeImage(FileImage(widget.imageFile), height: 400)),
-                  Text(radioListChoice!),
+                  Image(image: ResizeImage(FileImage(widget.imageFile), height: 280)),
+                  radioListChoice! == "None of the above" ?
+                  Text("Name the plant and help the community by sharing your care recommendations!")
+                  : Text("Give a nickname to your plant!"),
+                  TextField(
+                    controller: _controller,
+                    decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: plantName
+                      ),
+                    onSubmitted: (String value) async {
+                    },
+                  ),
                   SingleChildScrollView(
                     child: Column(
                       children: _results != null
-                          ? _results!.map((result) {
+                          ? _results!.map<Widget>((result) {
                         return RadioListTile<dynamic>(
                           title: Text('${result["label"]} -  ${result["confidence"].toStringAsFixed(2)}'),
                           value: result["label"], 
@@ -92,6 +120,11 @@ class _PlantPredictionScreenState extends State<PlantPredictionScreen> {
                            onChanged: (value) {
                                                 setState(() {
                                                   radioListChoice = value.toString();
+                                                  if(value != "None of the above"){
+                                                  plantName = value;
+                                                  }else{
+                                                    plantName = "";
+                                                  }
                                                 });
                                               }
                            ) 
@@ -109,10 +142,9 @@ class _PlantPredictionScreenState extends State<PlantPredictionScreen> {
                           ),
                         )*/;
                       }).toList()
-                          : [],
-                        
+                          : [],)
+                
                     ),
-                  )
               
               ]),
               crossFadeState: _results != null ? CrossFadeState.showSecond : CrossFadeState.showFirst,
@@ -127,8 +159,29 @@ class _PlantPredictionScreenState extends State<PlantPredictionScreen> {
     log("hey, it's me : predictImageFromPreview");
     // Perform image classification on the preview image.
     final res = await cls.imageClassification(widget.imageFile);
+    var predictions = [];
+    //predictions.addAll(res);
+    //List predictions = res['prediction'];
+    if (res.length > 3){
+      for(var i=0; i<3; i+=1){
+        predictions.add(res['prediction'][i]);
+      }
+      //predictions.removeRange(3, predictions.length -1);
+    }else{
+      for(var i=0; i<res.length; i+=1){
+        predictions.add(res['prediction'][i]);
+      }
+    }
+    predictions.add({
+      "label":"None of the above",
+      "confidence":0.0
+    });
+    log("res:");
+    log(res.toString());
+    log("predictions: ");
+    log(predictions.toString());
     setState(() {
-      _results = res['prediction'];
+      _results = predictions;//res['prediction'];
       //_image = res['image'];
     });
   }
