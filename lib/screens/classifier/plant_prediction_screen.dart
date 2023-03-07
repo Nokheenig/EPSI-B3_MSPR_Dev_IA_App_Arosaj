@@ -103,7 +103,7 @@ class _PlantPredictionScreenState extends State<PlantPredictionScreen> {
                   TextField(
                     controller: _controller,
                     decoration: InputDecoration(
-                        border: InputBorder.none,
+                        //border: InputBorder.none,
                         hintText: plantName
                       ),
                     onSubmitted: (String value) async {
@@ -112,7 +112,7 @@ class _PlantPredictionScreenState extends State<PlantPredictionScreen> {
                   SingleChildScrollView(
                     child: Column(
                       children: _results != null
-                          ? _results!.map<Widget>((result) {
+                          ? _results!.map((result) {
                         return RadioListTile<dynamic>(
                           title: Text('${result["label"]} -  ${result["confidence"].toStringAsFixed(2)}'),
                           value: result["label"], 
@@ -142,9 +142,37 @@ class _PlantPredictionScreenState extends State<PlantPredictionScreen> {
                           ),
                         )*/;
                       }).toList()
-                          : [],)
+                          : [Container()])
                 
                     ),
+                    Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                          
+                          Navigator.of(context).pushReplacement(
+                            MaterialPageRoute(
+                              builder: (context) => MainPage(startingPage: 0),
+                            ),
+                          );
+                        },
+                        child: Text("Cancel,\nand go back to my plants"),
+                        style: TextButton.styleFrom(
+                          primary: Colors.black,
+                          backgroundColor: Colors.white,
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: predictImageFromCamera,
+                        child: Text('Add this plant,\nin my garden'),
+                        style: TextButton.styleFrom(
+                          primary: Colors.black,
+                          backgroundColor: Colors.white,
+                        ),
+                      )
+                    ],
+                  )
               
               ]),
               crossFadeState: _results != null ? CrossFadeState.showSecond : CrossFadeState.showFirst,
@@ -184,6 +212,10 @@ class _PlantPredictionScreenState extends State<PlantPredictionScreen> {
       _results = predictions;//res['prediction'];
       //_image = res['image'];
     });
+  }
+
+  Future addPlant() async {
+    log("hey, it's me : addPlant");
   }
 
 }

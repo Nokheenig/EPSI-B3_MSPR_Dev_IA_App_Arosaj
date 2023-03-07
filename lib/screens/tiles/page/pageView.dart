@@ -10,42 +10,34 @@ class _MyHomePageState extends State<MyHomePage> {
 
   PageController controller=PageController();
   List<Widget> _list=<Widget>[
-    new Center(child:new Pages(
-                                display: ({@required final String? text}) {
-                                assert(text != null);
-                                return MyTextWidget(text: text!);
-                              },
-                                text: "Plant 1",)),
-    new Center(child:new Pages(
-      display: ({@required final String? text}) {
-        assert(text != null);
-        return MyTextWidget(text: text!);
-      },
-      text: "Plant 2",)),
-    new Center(child:new Pages(
-      display: ({@required final String? text}) {
-        assert(text != null);
-        return MyTextWidget(text: text!);
-      },
-      text: "Plant 3",)),
-    new Center(child:new Pages(
-      display: ({@required final String? text}) {
-        assert(text != null);
-        return MyTextWidget(text: text!);
-      },
-      text: "Plant 4",)),
-    /*new Center(child:new Pages(
-                                display: ({@required final String? text}) {
-                                  assert(text != null);
-                                  return TextTilePage(text: text!);
-                                },
-                                text: "Mon beau géranium",)),
-     */
 
-    /*
-    new Center(child:new Pages(text: "Plant 3",)),
-    new Center(child:new Pages(text: "Plant 4",))
-    */
+    new Center(child:new Pages(
+      text: "Tulipe",
+      display: ({@required final String? text}) {
+        assert(text != null);
+        return TextTilePage(text: text!);
+      })),
+
+      new Center(child:new Pages(
+      text: "Rose",
+      display: ({@required final String? text}) {
+        assert(text != null);
+        return TextTilePage(text: text!);
+      })),
+
+      new Center(child:new Pages(
+      text: "Oeillet",
+      display: ({@required final String? text}) {
+        assert(text != null);
+        return TextTilePage(text: text!);
+      })),
+
+    new Center(child:new Pages(
+      text: "Jasmin",
+      display: ({@required final String? text}) {
+        assert(text != null);
+        return TextTilePage(text: text!);
+      })),
   ];
   int _curr=0;
 
@@ -142,13 +134,17 @@ class PagesState extends State<Pages> {
   @override
   Widget build(final BuildContext context) {
     return Center(
-      child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children:<Widget>[
-            widget.display(text: widget.text),
-            Text(widget.text,textAlign: TextAlign.center,style: TextStyle(
-                fontSize: 30,fontWeight:FontWeight.bold),),
-          ]
+      child: SingleChildScrollView(
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children:<Widget>[
+              SizedBox(
+                height: 760.0,
+                child: widget.display(text: widget.text)),
+              /*Text(widget.text,textAlign: TextAlign.center,style: TextStyle(
+                  fontSize: 30,fontWeight:FontWeight.bold),),*/
+            ]
+        ),
       ),
     );
 

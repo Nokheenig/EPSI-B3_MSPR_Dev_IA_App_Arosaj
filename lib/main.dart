@@ -1,15 +1,37 @@
 import 'package:expandable_listview_example/screens/camera/camera_screen.dart';
 
-import 'screens/tiles/page/text_tile_page.dart';
+//import 'screens/tiles/page/text_tile_page.dart';
 import 'screens/tiles/page/pageView.dart';
 import 'screens/map/MapsView.dart';
 import 'screens/classifier/MyModel.dart';
-import 'screens/classifier/classifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:camera/camera.dart'; 
+import 'screens/settings/SettingsView.dart';
 
 List<CameraDescription> cameras = [];
+Map mainPages = {
+  0:{"page":MyHomePage(),
+      "title":"My plants",
+      "show":1,
+      "icon":Icon(Icons.fire_truck)},
+  1:{"page":MapPage(),
+      "title":"Map",
+      "show":1,
+      "icon":Icon(Icons.map)},
+  2:{"page":SettingsPage(),
+      "title":"Settings",
+      "show":1,
+      "icon":Icon(Icons.settings)},
+  3:{"page":MyModel(title: 'My classifier'),
+      "title":"Gallery Classifier",
+      "show":1,
+      "icon":Icon(Icons.sort)},
+  4:{"page":CameraScreen(),
+      "title":"Camera",
+      "show":1,
+      "icon":Icon(Icons.camera)},
+}; 
 
 Future main() async {
   try {
@@ -71,54 +93,59 @@ class _MainPageState extends State<MainPage> {
       selectedItemColor: Color.fromARGB(255, 255, 255, 255),
       unselectedItemColor: Color.fromARGB(255, 200, 200, 200),
       currentIndex: indexBottomNavBar,
-      items: [
-        BottomNavigationBarItem(
-          icon: Icon(Icons.card_giftcard),//Text('', style: style),
-          label: 'Card',
+      items: /*mainPages.entries.map((mainPage) {
+        return BottomNavigationBarItem(icon: mainPage["icon"],
+        );
+        },).toList(),*/
+      [
+        if (1+1 == 2) BottomNavigationBarItem(
+          icon: Icon(Icons.fire_truck),//Image.asset('images/BottomNavBar/leaf.png'),//Text('', style: style),
+          label: 'My plants',
         ),
-        BottomNavigationBarItem(
-          icon: Text('', style: style),
-          label: 'Screen',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.card_travel),//Text('', style: style),
+        if (1+1 == 2) BottomNavigationBarItem(
+          icon: Icon(Icons.map),
           label: 'Map',
         ),
-
-        BottomNavigationBarItem(
+        if (1+1 == 2) BottomNavigationBarItem(
+          icon: Icon(Icons.settings),//Text('', style: style),
+          label: 'Settings',
+        ),
+        if (1+1 == 2) BottomNavigationBarItem(
           icon: Text('', style: style),
           label: 'Predict',
         ),
-
-        BottomNavigationBarItem(
+        if (1+1 == 2) BottomNavigationBarItem(
           icon: Icon(Icons.camera),//Text('', style: style),
           label: 'Camera',
         ),
-        /*
-        BottomNavigationBarItem(
+        if (1+1 == 2) BottomNavigationBarItem(
           icon: Text('ExpansionTile', style: style),
           label: 'Other',
         ),
-         */
       ],
       onTap: (int index) => setState(() => this.indexBottomNavBar = index),
     );
   }
 
   Widget buildPages() {
-    switch (indexBottomNavBar) {
+    if(mainPages[indexBottomNavBar]["show"] != 0) {
+      return mainPages[indexBottomNavBar]["page"];
+    }else{
+      return Container();
+    }
+    /*switch (indexBottomNavBar) {
       case 0:
-        return TextTilePage(text:"Tulipe"); //Homepage (My plants)
+        return MyHomePage(); //Homepage (My plants)
       case 1:
-        return MyHomePage(); //Hidden: Terms of Use Screen
-      case 2:
         return MapPage(); //Map
+      case 2:
+        return SettingsPage(); //Settings
       case 3:
         return MyModel(title: 'My classifier'); //Classifier
       case 4:
         return CameraScreen();//MyCamera(); //Hidden: Camera
       default:
         return Container();
-    }
+    }*/
   }
 }

@@ -75,6 +75,7 @@ flutter:
     - assets/dummyImage.JPG
     - assets/images/camera-shutter-icon.png
     - assets/images/bouncy_balls.gif
+    - assets/images/BottomNavBar/leaf.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
