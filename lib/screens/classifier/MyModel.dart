@@ -1,9 +1,11 @@
 import 'dart:developer';
+import 'package:expandable_listview_example/screens/classifier/classifier.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:io';
 import 'package:tflite/tflite.dart';
 import 'package:image_picker/image_picker.dart';
+import 'classifier.dart';
 
 class MyModel extends StatefulWidget {
   const MyModel({super.key, required this.title});
@@ -27,11 +29,11 @@ class _MyModelState extends State<MyModel> {
 
   File? _image;// = Image.asset('assets/dummyImage.JPG');//File('assets/dummyImage.JPG');
   List? _results;//= [{"label":"","confidence":0.0},{"label":"","confidence":0.0}];
+  final Classifier cls = new Classifier();
 
   @override
   void initState() {
     super.initState();
-    loadModel();
   }
 
   @override
@@ -54,7 +56,7 @@ class _MyModelState extends State<MyModel> {
         title: Text('Image classification'),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: pickAnImage,
+        onPressed: predictImageFromGallery,
         tooltip: 'Select Image',
         child: const Icon(Icons.image),
       ), // This trailing comma makes auto-formatting nicer for build methods.
@@ -98,45 +100,18 @@ class _MyModelState extends State<MyModel> {
     );
   }
 
-  Future loadModel() async {
-    log("hey, it's me : loadModel");
-    Tflite.close();
-    String? res;
-    res = await Tflite.loadModel(
-      model: "assets/mobilenet_v1_1.0_224_1_default_1.tflite",
-      labels: "assets/imagenet_labels.txt",
-    );
-    print(res);
-  }
-
-  Future pickAnImage() async {
-    log("hey, it's me : pickAnImage");
-    // pick image and...
-    XFile? image;
-    image = await ImagePicker().pickImage(source: ImageSource.gallery);
-    if (image == null) return;
-    // Perform image classification on the selected image.
-    imageClassification(File(image.path));
-  }
-
-  Future imageClassification(File image) async {
-    log("hey, it's me : imageCLassification");
-    // Run tensorflowlite image classification model on the image
-    final List? results = await Tflite.runModelOnImage(
-      path: image.path,
-      numResults: 6,
-      threshold: 0.05,
-      imageMean: 127.5,
-      imageStd: 127.5,
-    );
-    log("results:");
-    if (results != null) results.forEach(print);
-// save the values in the variable we created and setstate
-    setState(() {
-      _results = results!;
-      _image = image;
-    });
-
-  }
+    Future predictImageFromGallery() async {
+      log("hey, it's me : pickAnImage");
+      // pick image and...
+      XFile? image;
+      image = await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (image == null) return;
+      // Perform image classification on the selected image.
+      final res = await cls.imageClassification(File(image.path));
+      setState(() {
+        _results = res['prediction'];
+        _image = res['image'];
+      });
+    }
 
 }
