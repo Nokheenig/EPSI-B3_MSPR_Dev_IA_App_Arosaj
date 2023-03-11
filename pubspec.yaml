@@ -46,11 +46,17 @@ dependencies:
   video_player: ^2.5.1
   permission_handler: ^10.2.0
   image: ^4.0.13
+  objectbox: ^1.7.2
+  objectbox_flutter_libs: any
+  faker: ^2.1.0
+  flutter_lorem: ^2.0.0
+
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
+  build_runner: any
+  objectbox_generator: any
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your

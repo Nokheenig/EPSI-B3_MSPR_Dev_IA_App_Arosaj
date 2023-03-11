@@ -4,7 +4,14 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:io';
 import '../classifier/classifier.dart';
+import '../../entities.dart';
+import 'package:faker/faker.dart';
+import 'package:flutter_lorem/flutter_lorem.dart';
+import 'dart:math' hide log;
 
+enum month {
+  january, february, march, april, may, june, july, august, september, october, november, december
+}
 //import 'captures_screen.dart';
 
 class PlantPredictionScreen extends StatefulWidget {
@@ -28,6 +35,8 @@ class _PlantPredictionScreenState extends State<PlantPredictionScreen> {
   final Classifier cls = new Classifier();
 
   late TextEditingController _controller;
+
+  final _random = new Random();
 
   @override
   void initState() {
@@ -216,6 +225,21 @@ class _PlantPredictionScreenState extends State<PlantPredictionScreen> {
 
   Future addPlant() async {
     log("hey, it's me : addPlant");
+    String nickname = plantName!;
+    if(radioListChoice != "None of the above"){
+      String commonName = radioListChoice!;
+    }else{
+      String commonName = plantName!;
+    }
+    int next(int min, int max) => min + _random.nextInt(max - min);
+    double tempC_min = next(3,8).toDouble();
+    double tempC_max = next(25,38).toDouble();
+    String desc = faker.lorem.sentences(3).toString();
+    String careAdvice = faker.lorem.sentences(4).toString();
+    int fruitPeriod_start = next(1, 12);
+    int fruitPeriod_end = next(1,12);
+    
+
   }
 
 }
