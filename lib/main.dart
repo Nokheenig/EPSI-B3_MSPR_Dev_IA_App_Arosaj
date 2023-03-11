@@ -1,4 +1,6 @@
+import 'package:expandable_listview_example/objectbox.g.dart';
 import 'package:expandable_listview_example/screens/camera/camera_screen.dart';
+import 'package:path_provider/path_provider.dart';
 
 //import 'screens/tiles/page/text_tile_page.dart';
 import 'screens/tiles/page/pageView.dart';
@@ -8,6 +10,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:camera/camera.dart'; 
 import 'screens/settings/SettingsView.dart';
+import 'package:faker/faker.dart';
+import 'package:path/path.dart';
+import 'entities.dart';
+import 'dart:math' hide log;
+import 'orm/orm_ObjectBox.dart';
+import 'session/session.dart';
 
 List<CameraDescription> cameras = [];
 Map mainPages = {
@@ -33,6 +41,9 @@ Map mainPages = {
       "icon":Icon(Icons.camera)},
 }; 
 
+late orm_ObjectBox orm;
+
+
 Future main() async {
   try {
     WidgetsFlutterBinding.ensureInitialized();
@@ -45,6 +56,7 @@ Future main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
+  orm = await orm_ObjectBox.create();
   //final Classifier cls = new Classifier();
   runApp(MyApp());
 }
@@ -75,7 +87,15 @@ class _MainPageState extends State<MainPage> {
 
   @override
   void initState(){
+    super.initState();
     indexBottomNavBar = widget.startingPage;
+    //orm _orm = new orm();
+  }
+
+  @override
+  void dispose(){
+    //_store.close();
+    super.dispose();
   }
 
   @override
@@ -148,4 +168,12 @@ class _MainPageState extends State<MainPage> {
         return Container();
     }*/
   }
+
+  
+  void createNewUser(){
+    String firstName = faker.person.firstName();
+    String lastName = faker.person.lastName();
+    currentUser = User(username: firstName + rndInt(10,999).toString(), email: "${firstName}.${lastName}@${emailProvider[rndInt(0,emailProvider.length-1)]}");
+  }
+
 }

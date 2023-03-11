@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'text_tile_page.dart';
+import 'package:expandable_listview_example/main.dart';
+import 'package:expandable_listview_example/entities.dart';
 
 class MyHomePage extends StatefulWidget {
   @override
@@ -8,8 +10,9 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
+
   PageController controller=PageController();
-  List<Widget> _list=<Widget>[
+  List<Widget> _list=<Widget>[/*
 
     new Center(child:new Pages(
       text: "Tulipe",
@@ -37,9 +40,25 @@ class _MyHomePageState extends State<MyHomePage> {
       display: ({@required final String? text}) {
         assert(text != null);
         return TextTilePage(text: text!);
-      })),
+      })),*/
   ];
   int _curr=0;
+
+  @override
+  void initState(){
+    _list = <Widget>[];
+    List plantList = orm.plantBox.getAll();
+    for (var i=0; i<plantList.length; i++){
+      _list.add(
+        new Center(child:new Pages(
+      text: plantList[i].nickname,
+      display: ({@required final String? text}) {
+        assert(text != null);
+        return TextTilePage(text: text!);
+      }))
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
