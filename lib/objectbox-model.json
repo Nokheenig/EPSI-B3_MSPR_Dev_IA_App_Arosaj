@@ -1,0 +1,104 @@
+{
+  "_note1": "KEEP THIS FILE! Check it into a version control system (VCS) like git.",
+  "_note2": "ObjectBox manages crucial IDs for your object model. See docs for details.",
+  "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
+  "entities": [
+    {
+      "id": "1:6784039090344934016",
+      "lastPropertyId": "10:6206220631458580482",
+      "name": "Plant",
+      "properties": [
+        {
+          "id": "1:8495725585111085631",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:375546773648287955",
+          "name": "nickname",
+          "type": 9
+        },
+        {
+          "id": "3:2900260510737532925",
+          "name": "commonName",
+          "type": 9
+        },
+        {
+          "id": "4:7956068449093468264",
+          "name": "tempC_min",
+          "type": 8
+        },
+        {
+          "id": "5:4315408151448927277",
+          "name": "tempC_max",
+          "type": 8
+        },
+        {
+          "id": "6:8116030028831451142",
+          "name": "description",
+          "type": 9
+        },
+        {
+          "id": "7:1800539635958487629",
+          "name": "careAdvice",
+          "type": 9
+        },
+        {
+          "id": "8:530855944198160499",
+          "name": "fruitPeriod_start",
+          "type": 9
+        },
+        {
+          "id": "9:2270669413403383276",
+          "name": "fruitPeriod_end",
+          "type": 9
+        },
+        {
+          "id": "10:6206220631458580482",
+          "name": "ownerId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "1:5608732889448082028",
+          "relationTarget": "User"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "2:7800070661372951447",
+      "lastPropertyId": "3:6039436216482848605",
+      "name": "User",
+      "properties": [
+        {
+          "id": "1:4765816815282235039",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:3032041450875526389",
+          "name": "username",
+          "type": 9
+        },
+        {
+          "id": "3:6039436216482848605",
+          "name": "email",
+          "type": 9
+        }
+      ],
+      "relations": []
+    }
+  ],
+  "lastEntityId": "2:7800070661372951447",
+  "lastIndexId": "1:5608732889448082028",
+  "lastRelationId": "0:0",
+  "lastSequenceId": "0:0",
+  "modelVersion": 5,
+  "modelVersionParserMinimum": 5,
+  "retiredEntityUids": [],
+  "retiredIndexUids": [],
+  "retiredPropertyUids": [],
+  "retiredRelationUids": [],
+  "version": 1
+}
