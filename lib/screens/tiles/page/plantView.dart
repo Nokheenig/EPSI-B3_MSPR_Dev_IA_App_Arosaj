@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'text_tile_page.dart';
+import 'plant_tile_page.dart';
 import '../../../main.dart';
 import '../../../entities.dart';
 
@@ -14,7 +14,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
 
   PageController controller=PageController();
-  List<Widget> _list=<Widget>[
+  List<Widget> _plantWidgetList=<Widget>[
 /*
     new Center(child:new Pages(
       text: "Tulipe",
@@ -50,16 +50,16 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState(){
     log("my homepage init");
-    _list = <Widget>[];
+    _plantWidgetList = <Widget>[];
     List plantList = orm.store.box<Plant>().getAll();//List plantList = orm.plantBox.getAll();
     for (var i=0; i<plantList.length; i++){
-      _list.add(
-        new Center(child:new Pages(
-      text: plantList[i].nickname,
-      display: ({@required final String? text}) {
-        assert(text != null);
-        return TextTilePage(text: text!);
-      }))
+      _plantWidgetList.add(
+        Page(
+      object: plantList[i],
+      display: ({@required  var object}) {
+        assert(object != null);
+        return PlantTilePage(plantObject: object!);
+      })
       );
     }
     
@@ -77,12 +77,12 @@ class _MyHomePageState extends State<MyHomePage> {
               padding: const EdgeInsets.all(3.0),
               child: Text(
                 (
-                    _curr+1).toString()+"/"+_list.length.toString(),textScaleFactor: 2,),
+                    _curr+1).toString()+"/"+_plantWidgetList.length.toString(),textScaleFactor: 2,),
             )
           ],),
         body: PageView(
           children:
-          _list,
+          _plantWidgetList,
           scrollDirection: Axis.horizontal,
 
           // reverse: true,
@@ -100,12 +100,12 @@ class _MyHomePageState extends State<MyHomePage> {
               FloatingActionButton(
                   onPressed: () {
                     setState(() {
-                      _list.add(
+                      _plantWidgetList.add(
                         new Center(child: new Text(
                             "New page", style: new TextStyle(fontSize: 35.0))),
                       );
                     });
-                    if(_curr!=_list.length-1)
+                    if(_curr!=_plantWidgetList.length-1)
                       controller.jumpToPage(_curr+1);
                     else
                       controller.jumpToPage(0);
@@ -113,7 +113,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   child:Icon(Icons.add)),
               FloatingActionButton(
                   onPressed: (){
-                    _list.removeAt(_curr);
+                    _plantWidgetList.removeAt(_curr);
+                    //orm.store.box()
                     setState(() {
                       controller.jumpToPage(_curr-1);
                     });
@@ -136,25 +137,25 @@ class MyTextWidget extends StatelessWidget {
   }
 }
 
-typedef Widget DisplayType({@required final String text});
+typedef Widget DisplayType({@required var object});
 
-class Pages extends StatefulWidget {
+class Page extends StatefulWidget {
   final DisplayType display;
-  final String text;
+  var object;
 
-  Pages({
+  Page({
     required this.display,
-    required this.text
+    required this.object
   }) :  assert(display != null),
-        assert(text != null);
+        assert(object != null);
 
   @override
   State<StatefulWidget> createState() {
-    return PagesState();
+    return PageState();
   }
 }
 
-class PagesState extends State<Pages> {
+class PageState extends State<Page> {
   @override
   Widget build(final BuildContext context) {
     return Center(
@@ -164,7 +165,7 @@ class PagesState extends State<Pages> {
             children:<Widget>[
               SizedBox(
                 height: 760.0,
-                child: widget.display(text: widget.text)),
+                child: widget.display(object: widget.object)),
               /*Text(widget.text,textAlign: TextAlign.center,style: TextStyle(
                   fontSize: 30,fontWeight:FontWeight.bold),),*/
             ]

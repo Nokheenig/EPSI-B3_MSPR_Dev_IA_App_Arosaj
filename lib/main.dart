@@ -3,7 +3,7 @@ import 'screens/camera/camera_screen.dart';
 import 'package:path_provider/path_provider.dart';
 
 //import 'screens/tiles/page/text_tile_page.dart';
-import 'screens/tiles/page/pageView.dart';
+import 'screens/tiles/page/plantView.dart';
 import 'screens/map/MapsView.dart';
 import 'screens/classifier/MyModel.dart';
 import 'package:flutter/material.dart';
@@ -60,7 +60,7 @@ Future main() async {
   orm = await orm_ObjectBox.create();
   //final Classifier cls = new Classifier();
   log("orm object created");
-  orm.addDefaultContent();
+  //orm.addDefaultContent();
   log("orm default content added");
   runApp(MyApp());
 }
