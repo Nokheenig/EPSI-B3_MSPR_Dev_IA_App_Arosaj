@@ -132,7 +132,7 @@ class _PlantPredictionScreenState extends State<PlantPredictionScreen> {
                                                   if(value != "None of the above"){
                                                   plantName = value;
                                                   }else{
-                                                    plantName = "AnswerD";
+                                                    plantName = "Eg.: Hercules Poireau";
                                                   }
                                                 });
                                               }
@@ -174,16 +174,16 @@ class _PlantPredictionScreenState extends State<PlantPredictionScreen> {
                       ),
                       TextButton(
                         onPressed: (() {
-                          final String nickname = _controller.text;
+                          final String nickname = _controller.text != "" ? _controller.text : plantName!;
                           log("Plant Nickname (textfield) ${nickname}");
-                          final commonName = plantName == "AnswerD" ? nickname : plantName;
+                          final commonName = plantName == "Eg.: Hercules Poireau" ? nickname : plantName;
                           final Plant newPlant = Plant(
                             nickname: nickname,
                             commonName: commonName!,
                             tempC_min: faker.randomGenerator.integer(8, min:3).toDouble(),
                             tempC_max: faker.randomGenerator.integer(38, min:25).toDouble(),
-                            description: faker.lorem.sentences(3).toString(),
-                            careAdvice: faker.lorem.sentences(4).toString(),
+                            description: faker.lorem.sentences(3).join(".").toString(),
+                            careAdvice: faker.lorem.sentences(4).join(".").toString(),
                             fruitPeriod_start: defaultContent.yearMonths[faker.randomGenerator.integer(11,min:0)],
                             fruitPeriod_end: defaultContent.yearMonths[faker.randomGenerator.integer(11,min:0)]
                                 );

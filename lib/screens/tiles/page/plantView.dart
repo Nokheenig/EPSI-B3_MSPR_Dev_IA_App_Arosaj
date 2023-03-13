@@ -71,7 +71,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.grey,
+        backgroundColor: Color.fromARGB(255, 255, 255, 255),
         appBar:AppBar(
           title: Text("Plant: "),
           backgroundColor: Colors.green,
@@ -99,6 +99,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         floatingActionButton:Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.end,
             children:<Widget>[
               FloatingActionButton(
                   onPressed: () {
@@ -180,8 +181,9 @@ class PageState extends State<Page> {
             mainAxisAlignment: MainAxisAlignment.start,
             children:<Widget>[
               SizedBox(
-                height: 760.0,
+                height: 675.0,
                 child: widget.display(object: widget.object)),
+                Container(height: 150)
               /*Text(widget.text,textAlign: TextAlign.center,style: TextStyle(
                   fontSize: 30,fontWeight:FontWeight.bold),),*/
             ]

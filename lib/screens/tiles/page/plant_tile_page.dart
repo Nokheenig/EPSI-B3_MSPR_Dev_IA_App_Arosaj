@@ -68,12 +68,15 @@ class _PlantTilePageState extends State<PlantTilePage> {
         ),
       );
 
-  Widget buildImage() => Image.network(
-        'https://picsum.photos/200',
-        fit: BoxFit.cover,
-        width: double.infinity,
-        height: 200,
-      );
+  Widget buildImage() => AspectRatio(
+    aspectRatio: 1.0,
+    child: Image.network(
+          'https://picsum.photos/200',
+          fit: BoxFit.cover,
+          width: double.infinity,
+          height: 200,
+        ),
+  );
 
   Widget buildText(BuildContext context) => Theme(
         data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
@@ -86,27 +89,32 @@ class _PlantTilePageState extends State<PlantTilePage> {
             style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
           ),
           children: [
-            Text(
-              "Common name: ${widget.plantObject.commonName}",
-              style: TextStyle(fontSize: 18, height: 1.4),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Common name: ${widget.plantObject.commonName}\n",
+                  style: TextStyle(fontSize: 18, height: 1.4),
+                ),
+                Text(
+                  "Description: \n${widget.plantObject.description}\n",
+                  style: TextStyle(fontSize: 18, height: 1.4),
+                ),
+                Text(
+                  "Flower/fruit season: ${widget.plantObject.fruitPeriod_start} - ${widget.plantObject.fruitPeriod_end}\n",
+                  style: TextStyle(fontSize: 18, height: 1.4),
+                ),
+                Text(
+                  "Temperature range: ${widget.plantObject.tempC_min.toString()} - ${widget.plantObject.tempC_max.toString()} oC\n",
+                  style: TextStyle(fontSize: 18, height: 1.4),
+                ),
+                Text(
+                  "Care advice: \n${widget.plantObject.careAdvice}\n",
+                  style: TextStyle(fontSize: 18, height: 1.4),
+                ),
+              ],
             ),
-            Text(
-              "Description: ${widget.plantObject.description}",
-              style: TextStyle(fontSize: 18, height: 1.4),
-            ),
-            Text(
-              "Flower/fruit season: ${widget.plantObject.fruitPeriod_start} - ${widget.plantObject.fruitPeriod_end}",
-              style: TextStyle(fontSize: 18, height: 1.4),
-            ),
-            Text(
-              "Temperature range: ${widget.plantObject.tempC_min.toString()} - ${widget.plantObject.tempC_max.toString()} oC",
-              style: TextStyle(fontSize: 18, height: 1.4),
-            ),
-            Text(
-              "Care advice: ${widget.plantObject.careAdvice}",
-              style: TextStyle(fontSize: 18, height: 1.4),
-            ),
-
           ],
         ),
       );
