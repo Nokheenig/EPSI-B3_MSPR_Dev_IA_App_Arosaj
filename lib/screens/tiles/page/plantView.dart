@@ -45,22 +45,25 @@ class _MyHomePageState extends State<MyHomePage> {
       })),
 */
   ];
+  List<Plant> _plantObjectList = <Plant>[];
   int _curr=0;
 
   @override
   void initState(){
     log("my homepage init");
     _plantWidgetList = <Widget>[];
+    _plantObjectList = <Plant>[];
     List plantList = orm.store.box<Plant>().getAll();//List plantList = orm.plantBox.getAll();
     for (var i=0; i<plantList.length; i++){
       _plantWidgetList.add(
         Page(
-      object: plantList[i],
-      display: ({@required  var object}) {
-        assert(object != null);
-        return PlantTilePage(plantObject: object!);
-      })
+          object: plantList[i],
+          display: ({@required  var object}) {
+            assert(object != null);
+            return PlantTilePage(plantObject: object!);
+          })
       );
+      _plantObjectList.add(plantList[i]);
     }
     
   }
@@ -99,25 +102,38 @@ class _MyHomePageState extends State<MyHomePage> {
             children:<Widget>[
               FloatingActionButton(
                   onPressed: () {
-                    setState(() {
+
+                    Navigator.of(context).pushReplacement(
+                            MaterialPageRoute(
+                              builder: (context) => MainPage(startingPage: 4),
+                            ),
+                          );
+                    /*setState(() {
                       _plantWidgetList.add(
                         new Center(child: new Text(
                             "New page", style: new TextStyle(fontSize: 35.0))),
                       );
-                    });
+                    })
                     if(_curr!=_plantWidgetList.length-1)
                       controller.jumpToPage(_curr+1);
                     else
-                      controller.jumpToPage(0);
+                      controller.jumpToPage(0);*/
                   },
                   child:Icon(Icons.add)),
               FloatingActionButton(
                   onPressed: (){
-                    _plantWidgetList.removeAt(_curr);
+                    //orm.store.box<Plant>().remove(_plantWidgetList[_curr].)
+                    //log(_plantWidgetList[_curr].toString());
+                    final int indexToDelete = _curr;
+                    orm.store.box<Plant>().remove(_plantObjectList[indexToDelete].id);
+                    _plantObjectList.removeAt(indexToDelete);
+                    
+                    _plantWidgetList.removeAt(indexToDelete);
                     //orm.store.box()
                     setState(() {
-                      controller.jumpToPage(_curr-1);
+                      controller.jumpToPage(indexToDelete-1);
                     });
+                    
                   },
                   child:Icon(Icons.delete)),
             ]

@@ -99,6 +99,12 @@ class _MyHomePageState extends State<MyHomePage> {
             children:<Widget>[
               FloatingActionButton(
                   onPressed: () {
+                    Navigator.of(context).pushReplacement(
+                            MaterialPageRoute(
+                              builder: (context) => MainPage(startingPage: 4),
+                            ),
+                          );
+                    /*
                     setState(() {
                       _list.add(
                         new Center(child: new Text(
@@ -109,6 +115,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       controller.jumpToPage(_curr+1);
                     else
                       controller.jumpToPage(0);
+                    */
                   },
                   child:Icon(Icons.add)),
               FloatingActionButton(

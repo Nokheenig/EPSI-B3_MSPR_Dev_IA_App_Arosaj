@@ -7,6 +7,7 @@ import '../classifier/classifier.dart';
 import '../../entities.dart';
 import 'package:faker/faker.dart';
 import 'dart:math' hide log;
+import 'package:arosaj/entities_foundations.dart';
 
 enum month {
   january, february, march, april, may, june, july, august, september, october, november, december
@@ -131,7 +132,7 @@ class _PlantPredictionScreenState extends State<PlantPredictionScreen> {
                                                   if(value != "None of the above"){
                                                   plantName = value;
                                                   }else{
-                                                    plantName = "";
+                                                    plantName = "AnswerD";
                                                   }
                                                 });
                                               }
@@ -172,7 +173,28 @@ class _PlantPredictionScreenState extends State<PlantPredictionScreen> {
                         ),
                       ),
                       TextButton(
-                        onPressed: predictImageFromCamera,
+                        onPressed: (() {
+                          final String nickname = _controller.text;
+                          log("Plant Nickname (textfield) ${nickname}");
+                          final commonName = plantName == "AnswerD" ? nickname : plantName;
+                          final Plant newPlant = Plant(
+                            nickname: nickname,
+                            commonName: commonName!,
+                            tempC_min: faker.randomGenerator.integer(8, min:3).toDouble(),
+                            tempC_max: faker.randomGenerator.integer(38, min:25).toDouble(),
+                            description: faker.lorem.sentences(3).toString(),
+                            careAdvice: faker.lorem.sentences(4).toString(),
+                            fruitPeriod_start: defaultContent.yearMonths[faker.randomGenerator.integer(11,min:0)],
+                            fruitPeriod_end: defaultContent.yearMonths[faker.randomGenerator.integer(11,min:0)]
+                                );
+                          log("adding Plant to db...");
+                          orm.store.box<Plant>().put(newPlant);
+                          Navigator.of(context).pushReplacement(
+                            MaterialPageRoute(
+                              builder: (context) => MainPage(startingPage: 0),
+                            ),
+                          );
+                        }),
                         child: Text('Add this plant,\nin my garden'),
                         style: TextButton.styleFrom(
                           primary: Colors.black,
